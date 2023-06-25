@@ -71,7 +71,7 @@
                                 <td><?= $r['age']; ?></td>
                                 <td><?= $r['hypertension']; ?></td>
                                 <td><?= $r['heart_disease']; ?></td>
-                                <td><?= $r['ever_maried']; ?></td>
+                                <td><?= $r['ever_married']; ?></td>
                                 <td><?= $r['work_type']; ?></td>
                                 <td><?= $r['residence_type']; ?></td>
                                 <td><?= $r['avg_glucose_level']; ?></td>
