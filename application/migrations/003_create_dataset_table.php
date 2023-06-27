@@ -50,14 +50,8 @@ class Migration_Create_dataset_table extends CI_Migration {
 			'stroke' => array(
 					'type' => 'DOUBLE',
 			),
-			'created_at' => array(
-					'type' => 'TIMESTAMP',
-					'null' => TRUE
-			),
-			'updated_at' => array(
-					'type' => 'TIMESTAMP',
-					'null' => TRUE
-			),
+			'created_at datetime default current_timestamp',
+			'updated_at datetime default current_timestamp on update current_timestamp',
 			'deleted_at' => array(
 					'type' => 'TIMESTAMP',
 					'null' => TRUE
