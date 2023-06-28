@@ -5,6 +5,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 use Phpml\Classification\C45;
 use Phpml\Classification\KNearestNeighbors;
+// use Phpml\Classification\KNeighborsClassifier;
 use Phpml\Metric\Accuracy;
 use Phpml\Dataset\ArrayDataset;
 // use Phpml\Evaluation\Accuracy;
@@ -25,7 +26,7 @@ class PsoC4_5Controller extends CI_Controller
     {
         $dataset = $this->loadDataset(); // Mengambil dataset dari file CSV atau database
 
-        // print_r($dataset);
+        // print_r(json_encode($dataset->getSamples()));
         $selectedFeatures = $this->featureSelectionPSO($dataset); // Seleksi fitur menggunakan PSO
 
         $accuracy = $this->c45Classification($dataset, $selectedFeatures); // Klasifikasi menggunakan C4.5
@@ -43,15 +44,31 @@ class PsoC4_5Controller extends CI_Controller
         $data = $this->Dataset->getAll();
         // return $data;
 
-        // Konversi dataset menjadi format yang dapat digunakan oleh Php-ML
-        $samples = [];
-        $targets = [];
-        foreach ($data as $row) {
-            $samples[] = [$row['age'], $row['hypertension'], $row['heart_disease'], $row['avg_glucose_level'], $row['bmi']];
-            $targets[] = $row['stroke'];
-        }
+		// $trainPercentage = 0.7;
 
-        return new ArrayDataset($samples, $targets);
+		// $totalData = count($data);
+		// $trainSize = (int)($trainPercentage * $totalData);
+		// $testSize = $totalData - $trainSize;
+
+		// shuffle($data);
+
+		// $trainData = array_slice($data, 0, $trainSize);
+		// $testData = array_slice($data, $trainSize, $testSize);
+
+        // // Konversi dataset menjadi format yang dapat digunakan oleh Php-ML
+        // $samples = [];
+        // $targets = [];
+        // // foreach ($data as $row) {
+        // //     $samples[] = [$row['age'], $row['hypertension'], $row['heart_disease'], $row['avg_glucose_level'], $row['bmi']];
+        // //     $targets[] = $row['stroke'];
+        // // }
+        // foreach ($trainData as $row) {
+        //     $samples[] = [$row['age'], $row['hypertension'], $row['heart_disease'], $row['avg_glucose_level'], $row['bmi']];
+        //     $targets[] = $row['stroke'];
+        // }
+
+        // return new ArrayDataset($samples, $targets);
+        return $data;
     }
 
     private function featureSelectionPSO($dataset)
@@ -137,6 +154,35 @@ class PsoC4_5Controller extends CI_Controller
 
     //     return $accuracy; // Mengembalikan performa klasifikasi
     // }
+    // private function calculateFitness($position, $samples, $targets)
+    // {
+    //     $selectedFeatures = array_filter($position, function ($value) {
+    //         return $value == 1;
+    //     });
+
+    //     if (count($selectedFeatures) === 0) {
+    //         $subset = $samples;
+    //     } else {
+    //         $subset = array_map(function ($sample) use ($selectedFeatures) {
+    //             return array_intersect_key($sample, array_flip($selectedFeatures));
+    //         }, $samples);
+    //     }
+
+    //     // Melakukan klasifikasi menggunakan KNN pada subset fitur
+    //     $xTrain = $subset;
+    //     $yTrain = $targets;
+
+    //     $classifier = new KNearestNeighbors(3);
+    //     $classifier->train($xTrain, $yTrain);
+
+    //     $xTest = $subset;
+    //     $yTest = $targets;
+
+    //     $predictions = $classifier->predict($xTest);
+    //     $accuracy = Accuracy::score($yTest, $predictions);
+
+    //     return $accuracy; // Mengembalikan performa klasifikasi (misalnya akurasi)
+    // }
     private function calculateFitness($position, $samples, $targets)
     {
         $selectedFeatures = array_filter($position, function ($value) {
@@ -155,37 +201,45 @@ class PsoC4_5Controller extends CI_Controller
         $xTrain = $subset;
         $yTrain = $targets;
 
-        $classifier = new KNearestNeighbors(3);
-        $classifier->train($xTrain, $yTrain);
+		$trainLabel = ['0','1'];
 
-        $xTest = $subset;
-        $yTest = $targets;
+        $classifier = new KNearestNeighbors($k);
+		// $classifier = new KNeighborsClassifier(3);
+        // $classifier->train($xTrain, $yTrain);
+        $classifier->train($xTrain, $trainLabel);
 
-        $predictions = $classifier->predict($xTest);
-        $accuracy = Accuracy::score($yTest, $predictions);
+        // $predictions = [];
+        // foreach ($xTrain as $sample) {
+        //     $prediction = $classifier->predict($sample);
+        //     $predictions[] = $prediction;
+        // }
+
+		$predictedLabel = $classifier->predict($testData);
+
+        $accuracy = Accuracy::score($yTrain, $predictions);
 
         return $accuracy; // Mengembalikan performa klasifikasi (misalnya akurasi)
     }
 
-    private function c45Classification($dataset, $selectedFeatures)
-    {
-        $samples = $dataset->getSamples();
-        $targets = $dataset->getTargets();
+    // private function c45Classification($dataset, $selectedFeatures)
+    // {
+    //     $samples = $dataset->getSamples();
+    //     $targets = $dataset->getTargets();
 
-        if (count($selectedFeatures) === 0) {
-            $selectedSamples = $samples;
-        } else {
-            $selectedSamples = array_map(function ($sample) use ($selectedFeatures) {
-                return array_intersect_key($sample, array_flip($selectedFeatures));
-            }, $samples);
-        }
+    //     if (count($selectedFeatures) === 0) {
+    //         $selectedSamples = $samples;
+    //     } else {
+    //         $selectedSamples = array_map(function ($sample) use ($selectedFeatures) {
+    //             return array_intersect_key($sample, array_flip($selectedFeatures));
+    //         }, $samples);
+    //     }
 
-        $classifier = new C45();
-        $classifier->train(new ArrayDataset($selectedSamples, $targets));
+    //     $classifier = new C45();
+    //     $classifier->train(new ArrayDataset($selectedSamples, $targets));
 
-        // Melakukan klasifikasi menggunakan C4.5 pada subset fitur terpilih
-        // ...
+    //     // Melakukan klasifikasi menggunakan C4.5 pada subset fitur terpilih
+    //     // ...
 
-        return $accuracy; // Mengembalikan performa klasifikasi
-    }
+    //     return $accuracy; // Mengembalikan performa klasifikasi
+    // }
 }

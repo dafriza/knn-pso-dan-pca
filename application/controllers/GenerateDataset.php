@@ -17,12 +17,13 @@ class GenerateDataset extends CI_Controller
 				$new_datas[$i-1][$nameCollumn[0][$j]] = $datas[$i][$j];
 			}
 		}
-		$res = $this->db->insert_batch('dataset', $new_datas);
-		if($res){
-			echo 'Berhasil Generate Data!';
-		}else{
-			return $res;
-		}
-		// print_r(json_encode($new_datas));
+
+		// $res = $this->db->insert_batch('dataset', $new_datas);
+		// if($res){
+		// 	echo 'Berhasil Generate Data!';
+		// }else{
+		// 	return $res;
+		// }
+		print_r(json_encode($new_datas));
     }
 }
