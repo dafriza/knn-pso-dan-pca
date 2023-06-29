@@ -2,7 +2,7 @@
     <div class="float-right d-none d-sm-block">
         <b>Version</b> 1.0 Hafsah Nur Thoyyibah Istiqomah
     </div>
-    <strong>Copyright &copy; <?= date('Y'); ?> Prediksi Penyakit Stroke</strong>
+    <strong>Copyright &copy; <?= date('Y') ?> Prediksi Penyakit Stroke</strong>
 </footer>
 
 <!-- Control Sidebar -->
@@ -14,13 +14,20 @@
 <!-- ./wrapper -->
 
 <!-- jQuery -->
-<script src="<?= base_url('assets'); ?>/plugins/jquery/jquery.min.js"></script>
+<script src="<?= base_url('assets') ?>/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
-<script src="<?= base_url('assets'); ?>/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="<?= base_url('assets') ?>/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
-<script src="<?= base_url('assets'); ?>/dist/js/adminlte.min.js"></script>
+<script src="<?= base_url('assets') ?>/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="<?= base_url('assets'); ?>/dist/js/demo.js"></script>
+<script src="<?= base_url('assets') ?>/dist/js/demo.js"></script>
+<!-- Datatable -->
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script>
+    let table = new DataTable('#myTable', {
+        responsive: true
+    });
+</script>
 
 <!-- scrip jquery untuk insert data role acces -->
 <script>

@@ -41,7 +41,7 @@
                 <!-- tombol untuk memunculkan modal -->
                 <!-- tombol untuk memunculkan modal -->
                 <div class="container-fluid" style="overflow-y:scroll;height:500px">
-                <table class="table table-hover">
+                <table class="table table-hover" id="myTable">
                     <thead>
                         <tr>
                             <th scope="col">#</th>

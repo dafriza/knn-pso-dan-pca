@@ -40,7 +40,7 @@ class User extends CI_Controller
     public function pso()
     {
         $data['title'] = 'KNN-PSO';
-        $data['dataset'] = $this->db->get('pso')->result_array();
+        // $data['dataset'] = $this->db->get('pso')->result_array();
 
         $this->load->view('templates/header', $data); //menampilkan halaman header.php : struktur folder -> file
         $this->load->view('templates/sidebar'); //menampilkan halaman sidebar.php : struktur folder -> file
@@ -51,12 +51,12 @@ class User extends CI_Controller
     public function pca()
     {
         $data['title'] = 'KNN-PCA';
-        $data['dataset'] = $this->db->get('pca')->result_array();
+        // $data['dataset'] = $this->db->get('pca')->result_array();
 
         $this->load->view('templates/header', $data); //menampilkan halaman header.php : struktur folder -> file
         $this->load->view('templates/sidebar'); //menampilkan halaman sidebar.php : struktur folder -> file
         $this->load->view('templates/navbar', $data); //menampilkan halaman navbar.php : struktur folder -> file
-        $this->load->view('user/psa', $data); //menampilkan halaman index.php : struktur folder -> file
+        $this->load->view('user/pca', $data); //menampilkan halaman index.php : struktur folder -> file
         $this->load->view('templates/footer'); //menampilkan halaman footer.php : struktur folder -> file
     }
     

@@ -82,8 +82,8 @@
                     aria-labelledby="nav-profile-tab">
                     <div class="card-body">
                         <div class="container-fluid" style="overflow-y:scroll;height:500px">
-                            <?php echo form_open_multipart('upload/pso'); ?>
-                            <h4>Input Parameter PSO</h4>
+                            <?php echo form_open_multipart('upload/pca'); ?>
+                            <h4>Input Parameter PCA</h4>
                             <div class="row">
                                 <div class="col-6">
                                     <div class="input-group mb-3">
@@ -96,48 +96,6 @@
                                             <label class="custom-file-label" for="file_dataSet">No file
                                                 chossen</label>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-3">
-                                    <div class="form-group">
-                                        <label for="c1">Nilai C1</label>
-                                        <input type="number" class="form-control" id="c1" aria-describedby="c1" name="p">
-                                    </div>
-                                </div>
-                                <div class="col-3">
-                                    <div class="form-group">
-                                        <label for="c2">Nilai C2</label>
-                                        <input type="number" class="form-control" id="c2" aria-describedby="c2" name="c2">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-3">
-                                    <div class="form-group">
-                                        <label for="bobot_inersia">Bobot Inersia</label>
-                                        <input type="number" class="form-control" id="bobot_inersia" aria-describedby="bobot_inersia" name="bobot_inersia">
-                                    </div>
-                                </div>
-                                <div class="col-3">
-                                    <div class="form-group">
-                                        <label for="k">Nilai K</label>
-                                        <input type="number" class="form-control" id="k" aria-describedby="k" name="k">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-3">
-                                    <div class="form-group">
-                                        <label for="p">Nilai P</label>
-                                        <input type="number" class="form-control" id="p" aria-describedby="p" name="p">
-                                    </div>
-                                </div>
-                                <div class="col-3">
-                                    <div class="form-group">
-                                        <label for="epoch">Epoch</label>
-                                        <input type="number" class="form-control" id="epoch" aria-describedby="epoch" name="epoch">
                                     </div>
                                 </div>
                             </div>

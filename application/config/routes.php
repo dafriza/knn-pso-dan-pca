@@ -51,4 +51,5 @@ defined('BASEPATH') or exit('No direct script access allowed');
 */
 $route['default_controller'] = 'auth';
 $route['404_override'] = 'auth/blocked';
+// $route['upload/do_upload'] = 'upload/do_upload';
 $route['translate_uri_dashes'] = FALSE;

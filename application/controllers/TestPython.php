@@ -10,9 +10,9 @@ class TestPython extends CI_Controller
         // echo $output;
         // $this->load->view('welcome_message');
         ob_start();
-        passthru('/usr/bin/python2.7 '. FCPATH."assets/dist/python/test.py".' "daffa" "rizky" 21 08 2001');
+        passthru('/usr/local/bin/python3 '. FCPATH."assets/dist/python/test.py".' "daffa" "rizky" 21 08 2001');
         $output = ob_get_clean();
-		// print_r($output);
+		print_r($output);
     }
 }
 ?>
