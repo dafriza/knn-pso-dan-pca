@@ -51,16 +51,16 @@ def f(x, alpha=0.88):
     j = [f_per_particle(x[i], alpha) for i in range(n_particles)]
     return np.array(j)
 
-# options = {'c1': 0.5, 'c2': 0.5, 'w':0.9, 'k': 30, 'p':2}
-options = {'c1': 0.5, 'c2': 0.5, 'w':0.9, 'k': 3, 'p':2}
+options = {'c1': 0.5, 'c2': 0.5, 'w':0.9, 'k': 30, 'p':2}
+# options = {'c1': 0.5, 'c2': 0.5, 'w':0.9, 'k': 3, 'p':2}
 # options = {'c1': int(sys.argv[3]), 'c2': int(sys.argv[4]), 'w':int(sys.argv[5]), 'k': int(sys.argv[6]), 'p':int(sys.argv[7])}
 
 nsampel, nfitur = x.shape
 dimensions = nfitur
 optimizer = ps.discrete.BinaryPSO(n_particles=30, dimensions=dimensions, options=options)
 
-# iter = 100
-iter = 1
+iter = 100
+# iter = 1
 # iter = int(sys.argv[8])
 cost, pos = optimizer.optimize(f, iters=iter)
 
