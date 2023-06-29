@@ -9,8 +9,8 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active"><?= $title ?></li>
+                        <li class="breadcrumb-item active"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item "><?= $title ?></li>
                     </ol>
                 </div>
             </div>
@@ -25,10 +25,10 @@
                 <!-- <h3 class="card-title"><?= $title ?></h3> -->
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                        <a class="nav-link" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
+                        <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
                             aria-controls="nav-home" aria-selected="true">KNN PSO</a>
-                        <a class="nav-link active" id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
-                            role="tab" aria-controls="nav-profile" aria-selected="false">Input Proses</a>
+                        <a class="nav-link " id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
+                            aria-controls="nav-profile" aria-selected="false">Input Proses</a>
                         <!-- <a class="nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab"
                             aria-controls="nav-contact" aria-selected="false">Contact</a> -->
                     </div>
@@ -43,43 +43,52 @@
                 </div> -->
             </div>
             <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                     <div class="card-body">
                         <?= $this->session->flashdata('message') ?>
+                        <?php if(!is_null($dataset)):?>
                         <div class="container-fluid" style="overflow-y:scroll;height:500px">
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Precission</th>
-                                        <th scope="col">Recall</th>
-                                        <th scope="col">F1-Score</th>
-                                        <th scope="col">Suport</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- looping nomer -->
-                                    <?php $i = 1; ?>
-                                    <!-- looping nomer -->
-                                    <?php foreach ($dataset as $r) : ?>
-                                    <tr>
-                                        <th><?= $r['name'] ?></th>
-                                        <td><?= $r['precisions'] ?></td>
-                                        <td><?= $r['recall'] ?></td>
-                                        <td><?= $r['f1_score'] ?></td>
-                                        <td><?= $r['suport'] ?></td>
-                                    </tr>
-                                    <!-- looping nomer -->
-                                    <?php $i++; ?>
-                                    <!-- looping nomer -->
-                                    <?php endforeach; ?>
-                                </tbody>
+                            <h4>Hasil Seleksi Fitur</h4>
+                            <p>Banyaknya attribut terpilih : <?= $dataset->total_attributes ?></p>
+                            <p>Attribut terpilih :
+                                <?= $dataset->attributes[0] . ', ' . $dataset->attributes[1] . ', ' . $dataset->attributes[2] . ', ' . $dataset->attributes[3] . ', ' . $dataset->attributes[4] ?>
+                            </p>
+                            <br><br>
+                            <h3>Hasil Klasifikasi (dalam Confusion Matrix)</h3>
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td colspan="2" class="text-center">Prediksi</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td>Positif</td>
+                                    <td>Negatif</td>
+                                </tr>
+                                <tr>
+                                    <td rowspan="2" class="text-center">Actual</td>
+                                    <td>Positif</td>
+                                    <td><?= $dataset->confusion_matrix[0][0] ?></td>
+                                    <td><?= $dataset->confusion_matrix[0][1] ?></td>
+                                </tr>
+                                <tr>
+                                    <td>Negatif</td>
+                                    <td><?= $dataset->confusion_matrix[1][0] ?></td>
+                                    <td><?= $dataset->confusion_matrix[1][1] ?></td>
+                                </tr>
                             </table>
+                            <br>
+                            <p>Nilai Akurasi : <?= $dataset->accuracy ?></p>
+                            <p>Report : <?= $dataset->classification_report ?></p>
                         </div>
+						<?php else: ;?>
+						<div class="container-fluid">
+							Data Masih belum diinput
+						</div>
+                        <?php endif ;?>
                     </div>
                 </div>
-                <div class="tab-pane fade show active" id="nav-profile" role="tabpanel"
-                    aria-labelledby="nav-profile-tab">
+                <div class="tab-pane fade " id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                     <div class="card-body">
                         <div class="container-fluid" style="overflow-y:scroll;height:500px">
                             <?php echo form_open_multipart('upload/pca'); ?>
@@ -99,7 +108,7 @@
                                     </div>
                                 </div>
                             </div>
-							<button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
                             </form>
                         </div>
                     </div>
