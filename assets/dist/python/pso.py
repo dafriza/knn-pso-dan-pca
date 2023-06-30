@@ -1,20 +1,23 @@
 import pandas as pd
 import numpy as np
-# import sys
+import sys
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split
-import logging
+# import logging
 
 # Konfigurasi logger
+# logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+import logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
 import pyswarms as ps
 import json
 
-dataset=pd.read_excel('/Applications/XAMPP/xamppfiles/htdocs/knn/assets/dist/xls/healthcare-dataset-stroke-data-no-missing-value.xls')
-# dataset=pd.read_excel(sys.argv[1])
+# dataset=pd.read_excel('/Applications/XAMPP/xamppfiles/htdocs/knn/assets/dist/xls/healthcare-dataset-stroke-data-no-missing-value.xls')
+dataset=pd.read_excel(sys.argv[1])
 
 dataset.drop('id',axis=1,inplace=True)
 
@@ -51,17 +54,17 @@ def f(x, alpha=0.88):
     j = [f_per_particle(x[i], alpha) for i in range(n_particles)]
     return np.array(j)
 
-options = {'c1': 0.5, 'c2': 0.5, 'w':0.9, 'k': 30, 'p':2}
+# options = {'c1': 0.5, 'c2': 0.5, 'w':0.9, 'k': 30, 'p':2}
 # options = {'c1': 0.5, 'c2': 0.5, 'w':0.9, 'k': 3, 'p':2}
-# options = {'c1': int(sys.argv[3]), 'c2': int(sys.argv[4]), 'w':int(sys.argv[5]), 'k': int(sys.argv[6]), 'p':int(sys.argv[7])}
+options = {'c1': float(sys.argv[3]), 'c2': float(sys.argv[4]), 'w':float(sys.argv[5]), 'k': float(sys.argv[6]), 'p':float(sys.argv[7])}
 
 nsampel, nfitur = x.shape
 dimensions = nfitur
 optimizer = ps.discrete.BinaryPSO(n_particles=30, dimensions=dimensions, options=options)
 
-iter = 100
 # iter = 1
-# iter = int(sys.argv[8])
+# iter = 1
+iter = int(sys.argv[8])
 cost, pos = optimizer.optimize(f, iters=iter)
 
 clf = KNeighborsClassifier(n_neighbors=3)
@@ -93,6 +96,6 @@ output = {
 }
 print(output)
 
-# with open(sys.argv[2]+'/output_pso.json', 'w') as file:
-with open('/Applications/XAMPP/xamppfiles/htdocs/knn/assets/dist/json/output_pso.json', 'w') as file:
+with open(sys.argv[2]+'/output_pso.json', 'w') as file:
+# with open('/Applications/XAMPP/xamppfiles/htdocs/knn/assets/dist/json/output_pso.json', 'w') as file:
     json.dump(output, file)
