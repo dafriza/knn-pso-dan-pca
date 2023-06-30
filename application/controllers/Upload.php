@@ -15,16 +15,17 @@ class Upload extends CI_Controller
         $args['epoch'] = $this->input->post('k', true);
         print_r($this->execute_py_pso($filename, $file_json, $args));
         // print_r($filename);
-        return redirect()->to(base_url('user/pso'));
+        return redirect('user/pso');
     }
     function pca()
     {
         $filename = FCPATH . 'assets/dist/xls/' . $this->do_upload()['file_name'];
         $file_json = FCPATH . 'assets/dist/json/';
-        print_r($this->execute_py_pca($filename, $file_json));
+        $best_komponen = $this->input->post('best_komponen', true);
+        print_r($this->execute_py_pca($filename, $file_json, $best_komponen));
         // print_r($filename);
         // print_r($file_json);
-        return redirect()->to(base_url('/user/pca'));
+        return redirect('user/pca');
     }
 
     function do_upload()
@@ -46,12 +47,12 @@ class Upload extends CI_Controller
         }
     }
 
-    function execute_py_pca($filename, $file_json)
+    function execute_py_pca($filename, $file_json, $best_komponen)
     {
         // ob_start();
         // passthru('/usr/local/bin/python3 ' . FCPATH . 'assets/dist/python/pca.py ' . $filename.' '.$file_json);
         // $output = ob_get_clean();
-        $output = shell_exec(escapeshellcmd('/usr/local/bin/python3 ' . FCPATH . 'assets/dist/python/pca.py ' . $filename . ' ' . $file_json));
+        $output = shell_exec(escapeshellcmd('/usr/local/bin/python3 ' . FCPATH . 'assets/dist/python/pca.py ' . $filename . ' ' . $file_json . ' ' . $best_komponen));
         return $output;
     }
     function execute_py_pso($filename, $file_json, $args)
@@ -59,7 +60,7 @@ class Upload extends CI_Controller
         // ob_start();
         // passthru('/usr/local/bin/python3 ' . FCPATH . 'assets/dist/python/pso.py ' . $filename.' '.$file_json);
         // $output = ob_get_clean();
-        $output = shell_exec(escapeshellcmd('/usr/local/bin/python3 ' . FCPATH . 'assets/dist/python/pso.py ' . $filename . ' ' . $file_json.' '.$args['c1'].' '.$args['c2'].' '.$args['bobot_inersia'].' '.$args['k'].' '.$args['p'].' '.$args['epoch']));
+        $output = shell_exec(escapeshellcmd('/usr/local/bin/python3 ' . FCPATH . 'assets/dist/python/pso.py ' . $filename . ' ' . $file_json . ' ' . $args['c1'] . ' ' . $args['c2'] . ' ' . $args['bobot_inersia'] . ' ' . $args['k'] . ' ' . $args['p'] . ' ' . $args['epoch']));
         // $output = shell_exec(escapeshellcmd('/usr/local/bin/python3 ' . FCPATH . 'assets/dist/python/pso.py ' . $filename . ' ' . $file_json));
         // $output = exec('/usr/local/bin/python3 ' . FCPATH . 'assets/dist/python/pso.py');
         // try {

@@ -32,7 +32,8 @@ sc = StandardScaler()
 xtrain = sc.fit_transform(xtrain)
 xtest = sc.transform(xtest)
 
-n_component = 5
+# n_component = 5
+n_component = int(sys.argv[3])
 pca = PCA(n_components = n_component)
 xtrain = pca.fit_transform(xtrain)
 xtest = pca.transform(xtest)

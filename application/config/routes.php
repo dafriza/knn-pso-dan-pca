@@ -53,3 +53,5 @@ $route['default_controller'] = 'auth';
 $route['404_override'] = 'auth/blocked';
 // $route['upload/do_upload'] = 'upload/do_upload';
 $route['translate_uri_dashes'] = FALSE;
+$route['user/pca'] = 'user/pca';
+$route['user/pso'] = 'user/pso';
